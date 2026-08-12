@@ -1,0 +1,30 @@
+# 构建产物
+build/
+dist/
+__pycache__/
+*.pyc
+
+# 大文件 / 备份（不进仓库）
+versions/
+source_baseline/
+exe_extract/
+*.pt
+*.zip
+
+# 内部文档
+交接文档.md
+
+# 嵌套 git 仓库保护（photoselect_app 内部有自己的 git 基线，只跟文件不跟 .git）
+photoselect_app/.git/
+
+# 其他
+*.log
+.DS_Store
+
+# 忽略所有嵌套 .git（防 submodule 误判）
+**/.git
+
+photoselect_app/.git_bak/
+
+# 可执行文件走 Releases 分发（超 GitHub 100MB 限制）
+PhotoSelect.exe
