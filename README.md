@@ -6,6 +6,11 @@
 
 **当前版本：v2.12.11** · Windows 免安装，双击即用
 
+## 📥 下载
+
+- **GitHub Releases（最新版）**：https://github.com/sksj200017-collab/photoselect/releases/latest
+- 下载 `PhotoSelect.exe` 后直接双击运行，无需安装
+
 ## ✨ 为什么摄影师会喜欢它
 
 - **Lightroom 式大图对比**：黑底深色界面，照片最大化铺满屏幕——主角是照片，不是按钮
