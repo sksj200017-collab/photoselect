@@ -4,7 +4,7 @@ PhotoSelect — 照片优选工具 (GUI v2.3)
 - 文件类型过滤（JPG/RAW/全部）
 - 分析完成 → 分组总览（可手动加入/移出组）→ 大图选图
 - 全屏预览：保留/删除按钮 + 双击纯放大
-- 每组确认后可撤销（从 _待删除 移回）
+- 每组确认后可撤销（从 待删除 移回）
 - 照片>6张滚动翻页
 - 导出前弹窗勾选范围
 """
@@ -31,7 +31,7 @@ from dedup_engine import (
 )
 
 APP_NAME = "PhotoSelect 照片优选"
-APP_VERSION = "2.12.11"
+APP_VERSION = "2.12.12"
 
 # ── Lightroom 风格黑底深色主题 ────────────────────────────────────
 QSS = """
@@ -216,7 +216,7 @@ class LicenseReminderDialog(QDialog):
             "· 或加微信 13917034098\n\n"
             "⚠️ 重要提醒：\n"
             "被标记删除的照片会移入原文件夹内的\n"
-            "「_待删除」文件夹（可恢复），\n"
+            "「待删除」文件夹（可恢复），\n"
             "确认无误后再手动删除释放空间。")
         body.setStyleSheet("color:#ddd; font-size:13px; line-height:1.7;")
         body.setWordWrap(True)
@@ -693,7 +693,7 @@ class ReviewPanel(QWidget):
         self.reset_btn = QPushButton("↺ 重置全部筛选")
         self.reset_btn.setObjectName("danger")
         self.reset_btn.setToolTip(
-            "一键撤销所有确认：把已移入「_待删除」的照片全部恢复，重新开始筛选")
+            "一键撤销所有确认：把已移入「待删除」的照片全部恢复，重新开始筛选")
         self.reset_btn.clicked.connect(self._reset_all)
         top.addWidget(self.reset_btn)
         outer.addLayout(top)
@@ -997,7 +997,7 @@ class ReviewPanel(QWidget):
         # 提示信息通过信号传给主窗口（跳转后显示在新面板上，不弹窗）
         msg = (f"✅ 本组已确认"
                + (f"：保留 {len(self.keep_paths)} 张" if self.keep_paths
-                  else "：全部移入「_待删除」（空组标记）")
+                  else "：全部移入「待删除」（空组标记）")
                + f"，其余 {n_photos} 张已移入「{TRASH_DIR_NAME}」\n"
                  f"💡 点「↩ 撤销本组确认」可恢复。")
         self.confirmed_with_msg.emit(self.group_index, msg)
@@ -1017,7 +1017,7 @@ class ReviewPanel(QWidget):
         return n
 
     def _undo_group(self):
-        """撤销确认：把照片从 _待删除 移回"""
+        """撤销确认：把照片从 待删除 移回"""
         if not self.group.confirmed:
             return
         folder = os.path.dirname(self.group.photos[0].path)
@@ -1072,8 +1072,8 @@ class BlurPreviewDialog(QDialog):
         top = QHBoxLayout()
         self.info_label = QLabel(
             f"🔍 以下 {n} 张照片可能没有对焦到主体上（模糊或手抖）。"
-            "\n点击选中照片（橙色边框）→ 点「🗑 删除选中」移入_待删除，"
-            "或点「✓ 保留选中」其余移入_待删除"
+            "\n点击选中照片（橙色边框）→ 点「🗑 删除选中」移入待删除，"
+            "或点「✓ 保留选中」其余移入待删除"
             "\n双击放大预览 · ←→键移动选择 · 未删除的进入后续筛选（带 ⚠ 标记）")
         self.info_label.setStyleSheet("color:#aaa; font-size:13px;")
         self.info_label.setWordWrap(True)
@@ -1112,7 +1112,7 @@ class BlurPreviewDialog(QDialog):
         self.sel_all_btn.setStyleSheet(
             "background:#1a3a5f; color:#7dd3fc; border:1px solid #2a7de1;"
             "font-weight:bold;")
-        self.sel_all_btn.setToolTip("选中所有模糊照片（再点删除选中可全部移入_待删除）")
+        self.sel_all_btn.setToolTip("选中所有模糊照片（再点删除选中可全部移入待删除）")
         self.sel_all_btn.clicked.connect(self._select_all)
         self.sel_all_btn.setFocusPolicy(Qt.NoFocus)
         bottom.addWidget(self.sel_all_btn)
@@ -1125,7 +1125,7 @@ class BlurPreviewDialog(QDialog):
         del_sel_btn.setStyleSheet("background:#dc2626; color:white;"
                                   "font-weight:bold;")
         del_sel_btn.clicked.connect(self._delete_selected)
-        del_sel_btn.setToolTip("选中的照片移入_待删除，未选中的保留继续筛选")
+        del_sel_btn.setToolTip("选中的照片移入待删除，未选中的保留继续筛选")
         del_sel_btn.setEnabled(False)
         del_sel_btn.setFocusPolicy(Qt.NoFocus)
         self.del_sel_btn_ref = del_sel_btn
@@ -1278,14 +1278,14 @@ class BlurPreviewDialog(QDialog):
             p for p in self.result.blurry_photos if p.path not in paths]
 
     def _delete_selected(self):
-        """删除选中：选中的移入_待删除，未选中的保留继续筛选"""
+        """删除选中：选中的移入待删除，未选中的保留继续筛选"""
         if not self.selected_paths:
             return
         n_del = len(self.selected_paths)
         n_keep = len(self.result.blurry_photos) - n_del
         ret = QMessageBox.question(
             self, "删除选中",
-            f"确定将选中的 {n_del} 张移入「_待删除」吗？\n"
+            f"确定将选中的 {n_del} 张移入「待删除」吗？\n"
             f"其余 {n_keep} 张保留继续筛选。\n\n（不会真正删除，可在文件夹中找到）",
             QMessageBox.Yes | QMessageBox.No)
         if ret != QMessageBox.Yes:
@@ -2012,7 +2012,7 @@ class GroupOverviewPanel(QWidget):
 
     # ── 未分组照片 → 待删除 ─────────────────────────────────────
     def _trash_selected_singles(self):
-        """把选中的未分组照片直接移入 _待删除"""
+        """把选中的未分组照片直接移入 待删除"""
         if not self._multi_select:
             QMessageBox.warning(self, "提示", "请先在右侧选择要移入待删除的照片！")
             return
@@ -3209,7 +3209,7 @@ class MainWindow(QMainWindow):
             ret = QMessageBox.question(
                 self, "重新分析",
                 "重新分析将丢弃当前的分组和保留选择，"
-                "\n已移入「_待删除」的照片会保留在文件夹中不受影响。"
+                "\n已移入「待删除」的照片会保留在文件夹中不受影响。"
                 "\n\n确定要重新开始吗？",
                 QMessageBox.Yes | QMessageBox.No)
             if ret != QMessageBox.Yes:
@@ -3479,7 +3479,7 @@ class MainWindow(QMainWindow):
             QMessageBox.information(
                 self, "🎉 全部完成",
                 "终于选完啦，辛苦啦！🌟\n\n"
-                "被删除的照片在「_待删除」文件夹中，\n"
+                "被删除的照片在「待删除」文件夹中，\n"
                 "确认无误后可手动删除释放空间。\n\n"
                 "保留的照片都留在原文件夹里了，随时可用~")
 

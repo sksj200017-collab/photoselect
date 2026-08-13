@@ -44,10 +44,10 @@ if win.result.groups:
     panel = win.right_layout.itemAt(0).widget()
     panel._confirm_group()
     app.processEvents()
-    trash = os.path.join(test_dir, "_待删除")
+    trash = os.path.join(test_dir, "待删除")
     assert os.path.isdir(trash), "待删除文件夹未创建"
     n_trash = len(os.listdir(trash))
-    print(f"确认组0: {n_trash} 张已移入 _待删除 ✓")
+    print(f"确认组0: {n_trash} 张已移入 待删除 ✓")
 
     # 验证原文件夹少了 n_trash 张
     remaining = [f for f in os.listdir(test_dir) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]

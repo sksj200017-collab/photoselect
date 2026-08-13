@@ -32,7 +32,7 @@ Shot 800 photos on a burst but only want 10? PhotoSelect automatically groups ne
 4. Review the groups in the Group Overview — drag photos between groups if you want to adjust
 5. Enter the large-photo review: **click a photo = keep ✓**, click "Confirm Group" to move to the next one; when all groups are done, click "Export"
 
-Discarded photos are never deleted — they are moved into a `_待删除` (to-delete) folder inside your original folder. Manually empty it once you are satisfied.
+Discarded photos are never deleted — they are moved into a `待删除` (to-delete) folder inside your original folder. Manually empty it once you are satisfied.
 
 ## ✅ When to use it
 

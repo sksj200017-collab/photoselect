@@ -35,7 +35,7 @@ THUMB_EDGE = 256
 VIEW_THUMB_EDGE = 512
 DEFAULT_THRESHOLD = 7
 MIN_SIZE = 10 * 1024      # 忽略小于 10KB 的文件（网络小图也要处理）
-TRASH_DIR_NAME = "_待删除"
+TRASH_DIR_NAME = "待删除"
 
 # 文件类型过滤
 FILTER_JPG = "jpg"     # 仅 JPG/JPEG
@@ -1029,7 +1029,7 @@ def move_to_trash(paths, folder):
 
 
 def restore_from_trash(paths, folder):
-    """撤销：把照片从 folder/_待删除/ 移回 folder/，返回成功数"""
+    """撤销：把照片从 folder/待删除/ 移回 folder/，返回成功数"""
     trash = os.path.join(folder, TRASH_DIR_NAME)
     if not os.path.isdir(trash):
         return 0
