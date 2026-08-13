@@ -1,5 +1,7 @@
 # PhotoSelect · 照片优选 — by nfd 📷
 
+> **中文** | [English](README_EN.md)
+
 > 不是 Photoshop，是 PhotoSelect！——给你照片做「断舍离」的小工具。
 
 拍了 800 张连拍，最后只想要 10 张？PhotoSelect 把「几乎一样的照片」自动归成一组，你用大图对比，每组留下最好的一两张，其余一键移走。整个过程**一张照片都不会真删**，随时能反悔。
