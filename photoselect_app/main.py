@@ -31,7 +31,7 @@ from dedup_engine import (
 )
 
 APP_NAME = "PhotoSelect 照片优选"
-APP_VERSION = "2.12.12"
+APP_VERSION = "1.0.0"
 
 # ── Lightroom 风格黑底深色主题 ────────────────────────────────────
 QSS = """
