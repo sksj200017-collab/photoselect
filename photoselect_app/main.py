@@ -31,7 +31,7 @@ from dedup_engine import (
 )
 
 APP_NAME = "PhotoSelect 照片优选"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 
 # ── Lightroom 风格黑底深色主题 ────────────────────────────────────
 QSS = """
@@ -3293,11 +3293,15 @@ class MainWindow(QMainWindow):
 
         mode_name = "同主体筛选" if result.mode == MODE_SUBJECT else "严格去重"
         failed = getattr(result, 'failed_count', 0)
+        failed_names = "、".join(
+            os.path.basename(p) for p, _ in
+            getattr(result, 'failed_paths', [])[:3])
         self.statusBar().showMessage(
             f"分析完成（{mode_name}）：共 {n_total} 张照片，"
             f"{n_in_groups} 张进入筛选（{n_groups}组），"
             f"{n_singles} 张独张"
-            + (f"，{failed} 张读取失败已跳过" if failed else ""))
+            + (f"，{failed} 张读取失败已跳过"
+               + (f"（{failed_names}）" if failed_names else "") if failed else ""))
 
         # 模糊预览（如果有模糊照片且开关已启用）
         blurry = getattr(result, 'blurry_photos', [])

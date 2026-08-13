@@ -675,6 +675,7 @@ class AnalysisResult:
         self.blurry_photos = []    # is_blurry=True 的照片列表
         self.file_filter = FILTER_ALL
         self.failed_count = 0      # 读取失败（损坏/不支持）的照片数
+        self.failed_paths = []     # 读取失败明细 [(path, 原因)]，便于诊断
 
 
 class Analyzer:
@@ -727,7 +728,8 @@ class Analyzer:
                 w, hgt = img.size
                 return path, PhotoInfo(path, h, s, b,
                                        os.path.getsize(path), w, hgt)
-            except Exception:
+            except Exception as e:
+                result.failed_paths.append((path, repr(e)[:150]))
                 return path, None
 
         n_workers = min(8, max(2, os.cpu_count() or 2))
