@@ -6,7 +6,7 @@
 
 Shot 800 photos on a burst but only want 10? PhotoSelect automatically groups near-identical photos together, so you can compare them side by side, keep the best one or two from each group, and move the rest away in one click. Nothing is ever truly deleted, you can always change your mind.
 
-**Current version: v1.0.1** · Windows · No installation needed, just double-click to run
+**Current version: v1.0.2** · Windows · No installation needed, just double-click to run
 
 ## 📥 Download
 
